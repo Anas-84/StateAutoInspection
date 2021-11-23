@@ -1,12 +1,13 @@
 package ru.yakup.carnumber.methods;
 
 import ru.yakup.carnumber.entities.CarNumber;
+import ru.yakup.carnumber.entities.CharCarNumber;
 import ru.yakup.carnumber.exception.AutoNumbersAreOverException;
 
 public class NextCarNumber {
 
     private static int count = 0;
-    private static final Character[] chars = {'А', 'В', 'Е', 'К', 'М', 'Н', 'О', 'Р', 'С', 'Т', 'У', 'Х'};
+    private static final Character[] chars = CharCarNumber.valueOf();
     private static final int LENGTH = chars.length;
 
     private NextCarNumber() {

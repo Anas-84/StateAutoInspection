@@ -1,10 +1,12 @@
 package ru.yakup.carnumber.methods;
 
 import ru.yakup.carnumber.entities.CarNumber;
+import ru.yakup.carnumber.entities.CharCarNumber;
+
 import java.util.concurrent.ThreadLocalRandom;
 
 public class RandomCarNumber {
-    private static final Character[] chars = {'А', 'Е', 'Т', 'О', 'Р', 'Н', 'У', 'К', 'Х', 'С', 'В', 'М'};
+    private static final Character[] chars = CharCarNumber.valueOf();
     private static final int LENGTH = chars.length;
 
     private RandomCarNumber() {
