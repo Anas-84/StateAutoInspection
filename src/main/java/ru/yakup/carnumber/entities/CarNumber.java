@@ -23,7 +23,7 @@ public class CarNumber {
     private String number;
     private String secondChar;
     private String lastChar;
-    private final String end = " 116 PUS";
+    private final String end = " 116 RUS";
 
     @Override
     public boolean equals(Object o) {

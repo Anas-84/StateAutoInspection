@@ -2,7 +2,6 @@ package ru.yakup.carnumber.methods;
 
 import ru.yakup.carnumber.entities.CarNumber;
 import ru.yakup.carnumber.entities.CharCarNumber;
-
 import java.util.concurrent.ThreadLocalRandom;
 
 public class RandomCarNumber {
