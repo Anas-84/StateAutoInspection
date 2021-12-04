@@ -15,7 +15,7 @@ public class RandomCarNumberService {
     @Autowired
     private CarNumberService carNumberService;
 
-    public CarNumber randomCarNumber() throws AutoNumbersAreOverException {
+    public synchronized CarNumber randomCarNumber() throws AutoNumbersAreOverException {
         if (carNumberService.amount() == 12 * 10 * 10 * 10 * 12 * 12) {
             throw new AutoNumbersAreOverException("Auto numbers are over");
         }

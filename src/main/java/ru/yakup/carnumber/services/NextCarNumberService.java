@@ -15,7 +15,7 @@ public class NextCarNumberService {
     @Autowired
     private CarNumberService carNumberService;
 
-    public CarNumber nextCarNumber() throws AutoNumbersAreOverException {
+    public synchronized CarNumber nextCarNumber() throws AutoNumbersAreOverException {
         CarNumber firstCarNumber = carNumberService.findCarNumber('А', 0, 'А', 'А');
         CarNumber nextCarNumber = null;
         if (carNumberService.amount() == 0) {
