@@ -18,23 +18,15 @@ class CarNumberRepositoryTest {
     private CarNumberRepository carNumberRepositoryH2;
 
     @Test
-    void existsCarNumberByFirstCharAndNumberAndSecondCharAndLastChar() {
-        carNumberRepositoryH2.saveAndFlush(testFirstCarNumber());
-        Boolean result = carNumberRepositoryH2
-                .existsCarNumberByFirstCharAndNumberAndSecondCharAndLastChar(testFirstCarNumber().getFirstChar(), testFirstCarNumber().getNumber(), testFirstCarNumber().getSecondChar(), testFirstCarNumber().getLastChar());
-        Assert.assertEquals(result, true);
-    }
-
-    @Test
-    void findCarNumberByFirstCharAndNumberAndSecondCharAndLastChar() {
+    void testFindCarNumber() {
         carNumberRepositoryH2.saveAndFlush(testFirstCarNumber());
         CarNumber actualСarNumber = carNumberRepositoryH2
-                .findCarNumberByFirstCharAndNumberAndSecondCharAndLastChar(testFirstCarNumber().getFirstChar(), testFirstCarNumber().getNumber(), testFirstCarNumber().getSecondChar(), testFirstCarNumber().getLastChar());
+                .findCarNumber(testFirstCarNumber().getFirstChar(), testFirstCarNumber().getNumber(), testFirstCarNumber().getSecondChar(), testFirstCarNumber().getLastChar());
         Assert.assertEquals(actualСarNumber, testFirstCarNumber());
     }
 
     @Test
-    void findCarNumberWithMaxCount() {
+    void testFindCarNumberWithMaxCount() {
         carNumberRepositoryH2.saveAndFlush(testFirstCarNumber());
         carNumberRepositoryH2.saveAndFlush(testSecondCatNumber());
         CarNumber actualСarNumber = carNumberRepositoryH2.findCarNumberWithMaxCount();
@@ -42,7 +34,7 @@ class CarNumberRepositoryTest {
     }
 
     @Test
-    void maxCount() {
+    void testMaxCount() {
         carNumberRepositoryH2.saveAndFlush(testFirstCarNumber());
         int maxCount = carNumberRepositoryH2.maxCount();
         Assert.assertEquals(maxCount, 1);
@@ -52,7 +44,7 @@ class CarNumberRepositoryTest {
     }
 
     @Test
-    void amount() {
+    void testAmount() {
         int amount = carNumberRepositoryH2.amount();
         Assert.assertEquals(amount, 0);
         carNumberRepositoryH2.saveAndFlush(testFirstCarNumber());

@@ -19,10 +19,10 @@ public class CarNumber {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private int count;
-    private  String firstChar;
-    private String number;
-    private String secondChar;
-    private String lastChar;
+    private Character firstChar;
+    private Integer number;
+    private Character secondChar;
+    private Character lastChar;
     private final String end = " 116 RUS";
 
     @Override
@@ -40,7 +40,17 @@ public class CarNumber {
 
     @Override
     public String toString() {
-        return firstChar + number + secondChar + lastChar + end;
+        String strNumber = number.toString();
+        int length = strNumber.length();
+        if (length == 1) {
+            return firstChar + "00" + strNumber + secondChar + lastChar + end;
+        }
+        else if (length == 2) {
+            return firstChar + "0" +  strNumber + secondChar + lastChar + end;
+        }
+        else {
+            return firstChar + strNumber + secondChar + lastChar + end;
+        }
     }
 }
 

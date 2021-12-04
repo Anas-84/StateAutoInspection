@@ -10,7 +10,7 @@ import static ru.yakup.carnumber.prototype.CarNumberPrototype.testSecondCatNumbe
 class NextCarNumberTest {
 
     @Test
-    void nextCarNumber() throws AutoNumbersAreOverException {
+    void testNextCarNumber() throws AutoNumbersAreOverException {
         CarNumber actualCarNumber = NextCarNumber.nextCarNumber(testFirstCarNumber());
         assertNotNull(actualCarNumber);
         assertNotEquals(testFirstCarNumber(), actualCarNumber);

@@ -17,14 +17,8 @@ public class CarNumberServiceImp implements CarNumberService {
     CarNumberRepository carNumberRepository;
 
     @Override
-    public Boolean existsCarNumberByFirstCharAndNumberAndSecondCharAndLastChar(String firstChar, String number, String secondChar, String lastChar) {
-        Boolean result = carNumberRepository.existsCarNumberByFirstCharAndNumberAndSecondCharAndLastChar(firstChar, number, secondChar, lastChar);
-        return result;
-    }
-
-    @Override
-    public CarNumber findCarNumberByFirstCharAndNumberAndSecondCharAndLastChar(String firstChar, String number, String secondChar, String lastChar) {
-        CarNumber carNumber = carNumberRepository.findCarNumberByFirstCharAndNumberAndSecondCharAndLastChar(firstChar, number, secondChar, lastChar);
+    public CarNumber findCarNumber(Character firstChar, Integer number, Character secondChar, Character lastChar) {
+        CarNumber carNumber = carNumberRepository.findCarNumber(firstChar, number, secondChar, lastChar);
         return carNumber;
     }
 
@@ -47,8 +41,13 @@ public class CarNumberServiceImp implements CarNumberService {
     }
 
     @Override
+    public boolean existsCarNumber(Character firstChar, Integer number, Character secondChar, Character lastChar) {
+        return carNumberRepository.existsCarNumber(firstChar, number, secondChar, lastChar);
+    }
+
+    @Override
     public void save(CarNumber carNumber) {
-        if (!existsCarNumberByFirstCharAndNumberAndSecondCharAndLastChar(carNumber.getFirstChar(),carNumber.getNumber(),carNumber.getSecondChar(),carNumber.getLastChar())){
+        if (!existsCarNumber(carNumber.getFirstChar(),carNumber.getNumber(),carNumber.getSecondChar(),carNumber.getLastChar())){
             carNumberRepository.saveAndFlush(carNumber);
         }
     }

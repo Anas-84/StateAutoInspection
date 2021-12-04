@@ -6,15 +6,15 @@ import java.util.List;
 
 public interface CarNumberService {
 
-    Boolean existsCarNumberByFirstCharAndNumberAndSecondCharAndLastChar(String firstChar, String number, String secondChar, String lastChar);
-
-    CarNumber findCarNumberByFirstCharAndNumberAndSecondCharAndLastChar(String firstChar, String number, String secondChar, String lastChar);
+    CarNumber findCarNumber(Character firstChar, Integer number, Character secondChar, Character lastChar);
 
     CarNumber findCarNumberWithMaxCount();
 
     int maxCount();
 
     int amount();
+
+    boolean existsCarNumber(Character firstChar, Integer number, Character secondChar, Character lastChar);
 
     void save(CarNumber carNumber);
 

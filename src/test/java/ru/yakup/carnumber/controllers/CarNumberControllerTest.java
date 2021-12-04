@@ -7,6 +7,9 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import ru.yakup.carnumber.services.CarNumberService;
+import ru.yakup.carnumber.services.NextCarNumberService;
+import ru.yakup.carnumber.services.RandomCarNumberService;
+
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import static org.springframework.http.RequestEntity.*;
@@ -18,17 +21,19 @@ class CarNumberControllerTest {
 
     MockMvc mockMvc;
     CarNumberService carNumberService;
+    RandomCarNumberService randomCarNumberService;
+    NextCarNumberService nextCarNumberService;
     ObjectMapper objectMapper;
 
     @BeforeEach
     void setUp() {
         carNumberService = mock(CarNumberService.class);
-        mockMvc = MockMvcBuilders.standaloneSetup(new CarNumberController(carNumberService)).build();
+        mockMvc = MockMvcBuilders.standaloneSetup(new CarNumberController(carNumberService, randomCarNumberService, nextCarNumberService)).build();
         objectMapper = new ObjectMapper();
     }
 
     @Test
-    void showCarNumbers() throws Exception {
+    void testShowCarNumbers() throws Exception {
         when(carNumberService.findAll()).thenReturn(testListCarNumber());
         mockMvc.perform((RequestBuilder) get("/number"))
                 .andExpect(content().json(objectMapper.writeValueAsString(testListCarNumber())))

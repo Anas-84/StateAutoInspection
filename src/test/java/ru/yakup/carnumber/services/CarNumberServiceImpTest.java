@@ -23,56 +23,49 @@ class CarNumberServiceImpTest {
     }
 
     @Test
-    void existsCarNumberByFirstCharAndNumberAndSecondCharAndLastChar() {
-        when(carNumberRepository.existsCarNumberByFirstCharAndNumberAndSecondCharAndLastChar(testFirstCarNumber().getFirstChar(), testFirstCarNumber().getNumber(), testFirstCarNumber().getSecondChar(), testFirstCarNumber().getLastChar())).thenReturn(true);
-        Boolean result = carNumberService.existsCarNumberByFirstCharAndNumberAndSecondCharAndLastChar(testFirstCarNumber().getFirstChar(), testFirstCarNumber().getNumber(), testFirstCarNumber().getSecondChar(), testFirstCarNumber().getLastChar());
-        Assert.assertEquals(result, true);
-    }
-
-    @Test
-    void findCarNumberByFirstCharAndNumberAndSecondCharAndLastChar() {
-        when(carNumberRepository.findCarNumberByFirstCharAndNumberAndSecondCharAndLastChar(testFirstCarNumber().getFirstChar(), testFirstCarNumber().getNumber(), testFirstCarNumber().getSecondChar(), testFirstCarNumber().getLastChar())).thenReturn(testFirstCarNumber());
-        CarNumber carNumber = carNumberService.findCarNumberByFirstCharAndNumberAndSecondCharAndLastChar(testFirstCarNumber().getFirstChar(), testFirstCarNumber().getNumber(), testFirstCarNumber().getSecondChar(), testFirstCarNumber().getLastChar());
+    void testFindCarNumber() {
+        when(carNumberRepository.findCarNumber(testFirstCarNumber().getFirstChar(), testFirstCarNumber().getNumber(), testFirstCarNumber().getSecondChar(), testFirstCarNumber().getLastChar())).thenReturn(testFirstCarNumber());
+        CarNumber carNumber = carNumberService.findCarNumber(testFirstCarNumber().getFirstChar(), testFirstCarNumber().getNumber(), testFirstCarNumber().getSecondChar(), testFirstCarNumber().getLastChar());
         Assert.assertEquals(carNumber,testFirstCarNumber());
     }
 
     @Test
-    void findCarNumberWithMaxCount() {
+    void testFindCarNumberWithMaxCount() {
         when(carNumberRepository.findCarNumberWithMaxCount()).thenReturn(testFirstCarNumber());
         CarNumber carNumber = carNumberService.findCarNumberWithMaxCount();
         Assert.assertEquals(carNumber, testFirstCarNumber());
     }
 
     @Test
-    void maxCount() {
+    void testMaxCount() {
         when(carNumberRepository.maxCount()).thenReturn(1);
         int maxCount = carNumberService.maxCount();
         Assert.assertEquals(maxCount, 1);
     }
 
     @Test
-    void amount() {
+    void testAmount() {
         when(carNumberRepository.amount()).thenReturn(0);
         int amount = carNumberService.amount();
         Assert.assertEquals(amount, 0);
     }
 
     @Test
-    void save() {
+    void testSave() {
         when(carNumberRepository.saveAndFlush(any())).thenReturn(testFirstCarNumber());
         carNumberService.save(testFirstCarNumber());
         Assert.assertNotNull(testFirstCarNumber());
     }
 
     @Test
-    void update() {
+    void testUpdate() {
         when(carNumberRepository.saveAndFlush(any())).thenReturn(testFirstCarNumber());
         carNumberService.update(testFirstCarNumber());
         Assert.assertNotNull(testFirstCarNumber());
     }
 
     @Test
-    void findAll() {
+    void testFindAll() {
         when(carNumberRepository.findAll()).thenReturn(testListCarNumber());
         List<CarNumber> carNumbers = carNumberService.findAll();
         Assert.assertNotNull(carNumbers);

@@ -1,7 +1,6 @@
 package ru.yakup.carnumber.prototype;
 
 import ru.yakup.carnumber.entities.CarNumber;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,20 +8,20 @@ public class CarNumberPrototype {
 
     public static CarNumber testFirstCarNumber() {
         CarNumber carNumber = new CarNumber();
-        carNumber.setFirstChar("Х");
-        carNumber.setNumber("999");
-        carNumber.setSecondChar("Х");
-        carNumber.setLastChar("А");
+        carNumber.setFirstChar('А');
+        carNumber.setNumber(999);
+        carNumber.setSecondChar('Х');
+        carNumber.setLastChar('Х');
         carNumber.setCount(1);
         return carNumber;
     }
 
     public static CarNumber testSecondCatNumber() {
         CarNumber carNumber = new CarNumber();
-        carNumber.setFirstChar("Х");
-        carNumber.setNumber("000");
-        carNumber.setSecondChar("Х");
-        carNumber.setLastChar("В");
+        carNumber.setFirstChar('В');
+        carNumber.setNumber(0);
+        carNumber.setSecondChar('Х');
+        carNumber.setLastChar('Х');
         carNumber.setCount(2);
         return carNumber;
     }

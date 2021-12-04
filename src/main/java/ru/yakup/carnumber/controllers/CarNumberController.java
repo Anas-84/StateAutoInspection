@@ -8,10 +8,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.yakup.carnumber.entities.CarNumber;
 import ru.yakup.carnumber.exception.AutoNumbersAreOverException;
-import ru.yakup.carnumber.methods.NextCarNumber;
-import ru.yakup.carnumber.methods.RandomCarNumber;
 import ru.yakup.carnumber.services.CarNumberService;
-
+import ru.yakup.carnumber.services.NextCarNumberService;
+import ru.yakup.carnumber.services.RandomCarNumberService;
 import java.util.List;
 
 @RestController
@@ -22,50 +21,31 @@ public class CarNumberController {
 
     @Autowired
     private CarNumberService carNumberService;
+    @Autowired
+    private RandomCarNumberService randomService;
+    @Autowired
+    private NextCarNumberService nextService;
 
     @GetMapping("")
     public List<CarNumber> showCarNumbers() {
-        List<CarNumber> carNumbers = carNumberService.findAll();
-        return carNumbers;
+        return carNumberService.findAll();
     }
 
     @GetMapping("/random")
     public String randomCarNumber() {
-        CarNumber carNumber = null;
-        do {
-            carNumber = RandomCarNumber.carNumberRandom();
-        } while (carNumberService.existsCarNumberByFirstCharAndNumberAndSecondCharAndLastChar(carNumber.getFirstChar(), carNumber.getNumber(), carNumber.getSecondChar(), carNumber.getLastChar()));
-        carNumberService.save(carNumber);
-        return carNumber.toString();
+        try {
+            return randomService.randomCarNumber().toString();
+        } catch (AutoNumbersAreOverException e) {
+            return e.getMessage();
+        }
     }
 
     @GetMapping("/next")
     public String nextCarNumber() {
-        CarNumber nextCarNumber = null;
-        if (carNumberService.amount() == 0 || carNumberService.maxCount() == 0) {
-            nextCarNumber = new CarNumber(0,1,"А", "000", "А", "А");
+        try {
+            return nextService.nextCarNumber().toString();
+        } catch (AutoNumbersAreOverException e) {
+            return e.getMessage();
         }
-        else {
-            CarNumber carNumber = null;
-            CarNumber checkCarNumber = null;
-            do {
-                carNumber = carNumberService.findCarNumberWithMaxCount();
-                try {
-                    nextCarNumber = NextCarNumber.nextCarNumber(carNumber);
-                } catch (AutoNumbersAreOverException e) {
-                    return e.getMessage();
-                }
-                checkCarNumber = carNumberService.findCarNumberByFirstCharAndNumberAndSecondCharAndLastChar(nextCarNumber.getFirstChar(), nextCarNumber.getNumber(), nextCarNumber.getSecondChar(), nextCarNumber.getLastChar());
-                if(nextCarNumber.equals(checkCarNumber)) {
-                    checkCarNumber.setCount(carNumber.getCount() + 1);
-                    carNumberService.update(checkCarNumber);
-                }
-                else {
-                    nextCarNumber.setCount(carNumber.getCount() + 1);
-                }
-            } while (carNumberService.existsCarNumberByFirstCharAndNumberAndSecondCharAndLastChar(nextCarNumber.getFirstChar(), nextCarNumber.getNumber(), nextCarNumber.getSecondChar(), nextCarNumber.getLastChar()));
-        }
-        carNumberService.save(nextCarNumber);
-        return nextCarNumber.toString();
     }
 }
