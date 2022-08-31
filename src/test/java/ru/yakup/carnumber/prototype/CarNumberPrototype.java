@@ -1,35 +1,32 @@
 package ru.yakup.carnumber.prototype;
 
-import ru.yakup.carnumber.entities.CarNumber;
-import java.util.ArrayList;
+import ru.yakup.carnumber.model.CarNumber;
+
 import java.util.List;
 
 public class CarNumberPrototype {
 
     public static CarNumber testFirstCarNumber() {
-        CarNumber carNumber = new CarNumber();
-        carNumber.setFirstChar('А');
-        carNumber.setNumber(999);
-        carNumber.setSecondChar('Х');
-        carNumber.setLastChar('Х');
-        carNumber.setCount(1);
-        return carNumber;
+        return CarNumber.builder()
+                .count(1)
+                .firstChar('A')
+                .number(999)
+                .secondChar('X')
+                .lastChar('X')
+                .build();
     }
 
     public static CarNumber testSecondCatNumber() {
-        CarNumber carNumber = new CarNumber();
-        carNumber.setFirstChar('В');
-        carNumber.setNumber(0);
-        carNumber.setSecondChar('Х');
-        carNumber.setLastChar('Х');
-        carNumber.setCount(2);
-        return carNumber;
+        return CarNumber.builder()
+                .count(2)
+                .firstChar('B')
+                .number(1)
+                .secondChar('X')
+                .lastChar('X')
+                .build();
     }
 
     public static List<CarNumber> testListCarNumber() {
-        List<CarNumber> carNumbers = new ArrayList<>();
-        carNumbers.add(testFirstCarNumber());
-        carNumbers.add(testSecondCatNumber());
-        return carNumbers;
+        return List.of(testFirstCarNumber(), testSecondCatNumber());
     }
 }

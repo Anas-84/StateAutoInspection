@@ -1,44 +1,57 @@
 package ru.yakup.carnumber.services;
 
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import ru.yakup.carnumber.entities.CarNumber;
-import ru.yakup.carnumber.exception.AutoNumbersAreOverException;
-import ru.yakup.carnumber.methods.NextCarNumber;
+import ru.yakup.carnumber.model.CarNumber;
+import ru.yakup.carnumber.utils.NextCarNumber;
 
+@Slf4j
 @Service
-@NoArgsConstructor
-@AllArgsConstructor
 public class NextCarNumberService {
-    @Autowired
-    private CarNumberService carNumberService;
 
-    public synchronized CarNumber nextCarNumber() throws AutoNumbersAreOverException {
-        CarNumber firstCarNumber = carNumberService.findCarNumber('А', 0, 'А', 'А');
+    private final CarNumberService carNumberService;
+
+    public NextCarNumberService(CarNumberService carNumberService) {
+        this.carNumberService = carNumberService;
+    }
+
+    public CarNumber nextCarNumber() {
+        log.debug("Start NextCarNumberService");
+
         CarNumber nextCarNumber = null;
-        if (carNumberService.amount() == 0) {
-            nextCarNumber = new CarNumber(0, 1, 'А', 0, 'А', 'А');
-        }
-        else {
-            if (carNumberService.maxCount() == 0 && firstCarNumber != null) {
+        CarNumber firstCarNumber = carNumberService.findCarNumber('A', 1, 'A', 'A');
+        if (firstCarNumber == null) {
+            nextCarNumber = CarNumber.builder()
+                    .count(1)
+                    .firstChar('A')
+                    .number(1)
+                    .secondChar('A')
+                    .lastChar('A')
+                    .build();
+            carNumberService.save(nextCarNumber);
+        } else {
+            if (carNumberService.maxCount() == 0) {
                 firstCarNumber.setCount(1);
                 carNumberService.update(firstCarNumber);
             }
             do {
                 CarNumber carNumber = carNumberService.findCarNumberWithMaxCount();
                 nextCarNumber = NextCarNumber.nextCarNumber(carNumber);
-                CarNumber checkCarNumber = carNumberService.findCarNumber(nextCarNumber.getFirstChar(), nextCarNumber.getNumber(), nextCarNumber.getSecondChar(), nextCarNumber.getLastChar());
+                CarNumber checkCarNumber = carNumberService.findCarNumber(nextCarNumber.getFirstChar(),
+                        nextCarNumber.getNumber(),
+                        nextCarNumber.getSecondChar(),
+                        nextCarNumber.getLastChar());
                 if (nextCarNumber.equals(checkCarNumber)) {
                     checkCarNumber.setCount(carNumber.getCount() + 1);
                     carNumberService.update(checkCarNumber);
                 } else {
                     nextCarNumber.setCount(carNumber.getCount() + 1);
                 }
-            } while (carNumberService.existsCarNumber(nextCarNumber.getFirstChar(), nextCarNumber.getNumber(), nextCarNumber.getSecondChar(), nextCarNumber.getLastChar()));
+            } while (!carNumberService.save(nextCarNumber));
         }
-        carNumberService.save(nextCarNumber);
+
+        log.debug("NextCarNumberService SUCCESS");
+        log.debug("NextCarNumberService SUCCESS, carNumber = {}", nextCarNumber);
         return nextCarNumber;
     }
 }

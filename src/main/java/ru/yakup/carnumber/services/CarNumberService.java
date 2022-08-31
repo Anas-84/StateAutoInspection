@@ -1,12 +1,12 @@
 package ru.yakup.carnumber.services;
 
-import ru.yakup.carnumber.entities.CarNumber;
+import ru.yakup.carnumber.model.CarNumber;
 
 import java.util.List;
 
 public interface CarNumberService {
 
-    CarNumber findCarNumber(Character firstChar, Integer number, Character secondChar, Character lastChar);
+    CarNumber findCarNumber(char firstChar, int number, char secondChar, char lastChar);
 
     CarNumber findCarNumberWithMaxCount();
 
@@ -14,12 +14,11 @@ public interface CarNumberService {
 
     int amount();
 
-    boolean existsCarNumber(Character firstChar, Integer number, Character secondChar, Character lastChar);
+    boolean existsCarNumber(char firstChar, int number, char secondChar, char lastChar);
 
-    void save(CarNumber carNumber);
+    boolean save(CarNumber carNumber);
 
     void update(CarNumber carNumber);
 
     List<CarNumber> findAll();
-
 }
